@@ -17,3 +17,5 @@ export function getCenterY(game) {
 export function getViewport(game) {
     return game.config.viewport;
 }
+
+

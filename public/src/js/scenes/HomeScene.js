@@ -7,6 +7,18 @@ class HomeScene extends Phaser.Scene {
         super({ key: 'HomeScene' });
         this.luminaTalking = false; // Initial state
         this.initialDialogueEnded = false; // Track if initial dialogue has ended
+        this.lockboxGraphics = [
+            '012', '123', '234', '345', '456', '567', '678', '789', '890', '901',
+        ];
+
+
+        this.positions = [
+            {x:739.7, y: 342.3},
+            {x: 739.7, y: 393},
+            {x: 739.7, y: 444.3},
+            {x: 739.7, y: 493.3},
+        ];
+       
     }
 
     preload() {
@@ -16,10 +28,14 @@ class HomeScene extends Phaser.Scene {
         this.load.image('lumina_button_hover', './src/assets/graphics/ui/buttons/lumina_button_hover.png');
         this.load.image('postcard_small', './src/assets/graphics/scenes/home/graphics/postcard_small.png');
         this.load.image('postcard', './src/assets/graphics/scenes/home/graphics/postcard.png');
+        this.load.image('postcard_small_hover', './src/assets/graphics/scenes/home/graphics/postcard_small_hover.png');
+        this.load.image('poem_small_hover', './src/assets/graphics/scenes/home/graphics/poem_small_hover.png');
+        this.load.image('lockbox_small_hover', './src/assets/graphics/scenes/home/graphics/lockbox_small_hover.png');
+        this.load.image('laptop_small_hover', './src/assets/graphics/scenes/home/graphics/laptop_small_hover.png');
         this.load.image('poem_small', './src/assets/graphics/scenes/home/graphics/poem_small.png');
         this.load.image('poem', './src/assets/graphics/scenes/home/graphics/poem.png');
         this.load.image('lockbox_small', './src/assets/graphics/scenes/home/graphics/lockbox_small.png');
-       // this.load.image('lockbox', './src/assets/graphics/scenes/home/graphics/lockbox.png');
+       this.load.image('lockbox', './src/assets/static/lockbox.jpg');
         this.load.image('laptop_small', './src/assets/graphics/scenes/home/graphics/laptop_small.png');
       //  this.load.image('laptop', './src/assets/graphics/scenes/home/graphics/laptop.png');
         this.load.image('timer_frame', './src/assets/graphics/ui/timer_frame_mobile_laptop.png');
@@ -30,6 +46,16 @@ class HomeScene extends Phaser.Scene {
         this.load.image('dialogue_continue_hover', './src/assets/graphics/ui/buttons/dialogue_continue_hover.png');
         this.load.image('lumina', './src/assets/graphics/ui/lumina.png');
         this.load.json('dialogue', './src/assets/data/dialogue.json');
+              this.load.image('lockboxCorrect', 'assets/static/lockbox_correct.jpg');
+        this.load.image('lockboxIncorrect', 'assets/static/lockbox_incorrect.jpg');
+        this.load.image('lockboxOpen', 'assets/static/lockbox_open.jpg');
+
+        this.lockboxGraphics.forEach((value, i) => { 
+            this.load.image(value, `assets/graphics/scenes/home/graphics/${value}.png`);
+        });
+       
+
+        
     }
 
     create() {
@@ -40,7 +66,9 @@ class HomeScene extends Phaser.Scene {
 
             // Add the timer frame to the top left
             const timerFrame = this.add.image(-0.5, -0.07, 'timer_frame').setOrigin(0);
-
+            this.lockboxGraphics.forEach((value) => { 
+                this.add.image(value.x, value.y, value).setVisible(false);
+            });
             // Add the timer text with correct styling
             this.add.text(170, 60, 'TIME UNTIL NETWORK', { font: '18px Orbitron', fill: '#ff9900' }).setOrigin(0.5, 0.5);
             this.add.text(160, 90, 'UNRECOVERABLE:', { font: '18px Orbitron', fill: '#ff9900' }).setOrigin(0.5, 0.5);
@@ -90,9 +118,9 @@ class HomeScene extends Phaser.Scene {
         }
     }
 
-    toggleLuminaTalking(isTalking) {
-        this.luminaTalking = isTalking;
-
+    toggleLuminaTalking() {
+        this.luminaTalking = !this.luminaTalking;
+    
         if (this.luminaTalking) {
             this.disableInteractions();
             this.lumina.setVisible(true);
@@ -108,12 +136,12 @@ class HomeScene extends Phaser.Scene {
             this.addDialogue.hide();
             this.luminaButton.setVisible(true);
             this.enableInteractions();
+            this.luminaButton.setInteractive(); // Ensure Lumina button is interactive
         }
     }
-
     disableInteractions() {
         this.children.list.forEach(child => {
-            if (child.input) {
+            if (child.input && child.texture.key !== 'dialogue_continue') {
                 child.disableInteractive();
             }
         });
@@ -121,7 +149,7 @@ class HomeScene extends Phaser.Scene {
 
     enableInteractions() {
         this.children.list.forEach(child => {
-            if (child.input) {
+            if (child.input && child.texture.key !== 'dialogue_continue') {
                 child.setInteractive();
             }
         });
@@ -130,6 +158,7 @@ class HomeScene extends Phaser.Scene {
     endInitialDialogue() {
         this.initialDialogueEnded = true;
         this.toggleLuminaTalking(false);
+        this.luminaButton.setVisible(true); // Show the Lumina button after initial dialogue ends
     }
 }
 

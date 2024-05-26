@@ -87,7 +87,7 @@ class AddDialogue {
                 i++;
             },
             repeat: length - 1,
-            delay: 50
+            delay: 20
         });
     }
 }
