@@ -1,0 +1,11 @@
+{
+    "initialDialogue": [
+        "Welcome to the game!",
+        "Let's get started.",
+        "Follow the instructions to proceed."
+    ],
+    "assistanceDialogue": [
+        "Do you need assistance?",
+        "Press the button again if you need more help."
+    ]
+}
