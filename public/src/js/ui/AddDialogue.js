@@ -7,27 +7,7 @@ class AddDialogue {
 
         this.text = this.scene.add.text(382 + 20, 824 + 20, '', { font: '18px Orbitron', fill: '#ffffff', wordWrap: { width: width - 40 } }).setOrigin(0, 0);
 
-        this.closeButton = this.scene.add.image(x + width - 20, y + 20, 'close_button').setInteractive().setOrigin(0.5);
-        this.closeButton.on('pointerover', () => {
-            this.closeButton.setTexture('close_button_hover');
-        });
-        this.closeButton.on('pointerout', () => {
-            this.closeButton.setTexture('close_button');
-        });
-        this.closeButton.on('pointerdown', () => {
-            this.hide();
-        });
 
-        this.continueButton = this.scene.add.image(1270, 980, 'dialogue_continue').setInteractive().setOrigin(0.5);
-        this.continueButton.on('pointerover', () => {
-            this.continueButton.setTexture('dialogue_continue_hover');
-        });
-        this.continueButton.on('pointerout', () => {
-            this.continueButton.setTexture('dialogue_continue');
-        });
-        this.continueButton.on('pointerdown', () => {
-            this.showNextDialogue();
-        });
 
         this.dialogue = [];
         this.currentIndex = 0;
@@ -65,31 +45,6 @@ class AddDialogue {
         }
     }
 
-    showNextDialogue() {
-        if (this.currentIndex < this.dialogue.length) {
-            this.text.setText('');
-            this.typewriteText(this.dialogue[this.currentIndex]);
-            this.currentIndex++;
-        } else {
-            this.hide();
-            if (!this.scene.initialDialogueEnded) {
-                this.scene.endInitialDialogue(); // End initial dialogue
-            }
-        }
-    }
-
-    typewriteText(text) {
-        const length = text.length;
-        let i = 0;
-        this.scene.time.addEvent({
-            callback: () => {
-                this.text.setText(text.substr(0, i));
-                i++;
-            },
-            repeat: length - 1,
-            delay: 20
-        });
-    }
 }
 
 export default AddDialogue;

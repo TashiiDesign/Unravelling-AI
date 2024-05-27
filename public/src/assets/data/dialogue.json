@@ -1,11 +1,39 @@
 {
-    "initialDialogue": [
-        "Welcome to the game!",
-        "Let's get started.",
-        "Follow the instructions to proceed."
-    ],
-    "assistanceDialogue": [
-        "Do you need assistance?",
-        "Press the button again if you need more help."
-    ]
+    "Home": {
+        "Lumina": {
+            "dialogue-welcome-1": "Welcome to the game!",
+            "dialogue-welcome-2": "Let's get started.",
+            "dialogue-welcome-3": "Follow the instructions to proceed.",
+            "dialogue-assist-1": "Do you need assistance?"
+        },
+        "Commander": {
+            "dialogue-1": "The commander is talking"
+        }
+    },
+    "Laboratory": {
+        "Lumina": {
+            "dialogue-welcome-1": "Welcome to the laboratory!",
+            "dialogue-welcome-2": "This is where you can conduct experiments.",
+            "dialogue-welcome-3": "Follow the instructions to proceed.",
+            "dialogue-assist": "Do you need assistance?"
+        },
+        "Scientist": {
+            "dialogue": "Please help me."
+        }
+    },
+    "Font": {
+        "font": "Orbitron-Regular",
+        "x": 382,
+        "y": 824,
+        "size": 18,
+        "style": "Arial",
+        "color": "#ffffff",
+        "wordWrap": {
+            "width": 800
+        },
+        "origin": {
+            "x": 0,
+            "y": 0
+        }
+    }
 }

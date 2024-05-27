@@ -1,3 +1,5 @@
+import Button from './Button.js';
+
 class Popup {
     constructor(scene) {
         this.scene = scene;
@@ -9,27 +11,17 @@ class Popup {
         this.popupGraphic = this.scene.add.image(0, 0, '').setOrigin(0).setVisible(false);
 
         // Create close button
-        this.closeButton = this.scene.add.image(this.scene.game.config.width - 50, 50, 'close_button').setInteractive().setOrigin(0.5);
-        this.closeButton.on('pointerover', () => {
-            this.closeButton.setTexture('close_button_hover');
-        });
-        this.closeButton.on('pointerout', () => {
-            this.closeButton.setTexture('close_button');
-        });
-        this.closeButton.on('pointerdown', () => {
-            this.hidePopup();
-        });
-        this.closeButton.setVisible(false);
+        this.closeButton = new Button(this.scene, this.scene.game.config.width - 50, 50, 'close_button', 'close_button_hover', () => this.hidePopup());
     }
 
     showPopup(graphicKey) {
         this.fadeBackground.setVisible(true);
         this.popupGraphic.setTexture(graphicKey).setVisible(true);
-        this.closeButton.setVisible(true);
+        this.closeButton.show();
 
         // Hide all interactive elements
         this.scene.children.list.forEach(child => {
-            if (child.input && child !== this.closeButton) {
+            if (child.input && child !== this.closeButton.button) {
                 child.disableInteractive();
                 child.setVisible(false);
             }
@@ -39,11 +31,11 @@ class Popup {
     hidePopup() {
         this.fadeBackground.setVisible(false);
         this.popupGraphic.setVisible(false);
-        this.closeButton.setVisible(false);
+        this.closeButton.hide();
 
         // Show all interactive elements
         this.scene.children.list.forEach(child => {
-            if (child.input && child !== this.closeButton) {
+            if (child.input && child !== this.closeButton.button) {
                 child.setInteractive();
                 child.setVisible(true);
             }
